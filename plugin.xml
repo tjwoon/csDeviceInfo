@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="org.cloudsky.cordovaplugins.deviceinfo" version="0.0.1">
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <name>DeviceInfo</name>
+    <author>TJ Woon (tj@cloudsky.org)</author>
+    <description>A Cordova plugin to retrieve app info such as version name, app name, etc.</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,device,device info</keywords>
+    <js-module src="www/deviceInfo.js" name="deviceInfo">
+        <clobbers target="deviceInfo" />
+    </js-module>
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="DeviceInfo">
+                <param name="android-package" value="org.cloudsky.cordovaPlugins.DeviceInfo"/>
+            </feature>
+        </config-file>
+        <source-file src="android/DeviceInfo.java" target-dir="src/org/cloudsky/cordovaPlugins" />
+    </platform>
+</plugin>
