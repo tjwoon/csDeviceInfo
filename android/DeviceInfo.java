@@ -21,7 +21,6 @@ public class DeviceInfo extends CordovaPlugin {
         if(action.equals("getVersionName")) {
             Activity act = cordova.getActivity();
             PackageManager packageManager = act.getPackageManager();
-            PluginResult result;
             try {
                 PackageInfo packageInfo = packageManager.getPackageInfo(
                     act.getApplicationContext().getPackageName(),
