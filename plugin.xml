@@ -12,7 +12,7 @@
     <license>Apache 2.0</license>
     <keywords>cordova,device,device info</keywords>
     <js-module src="www/deviceInfo.js" name="deviceInfo">
-        <clobbers target="deviceInfo" />
+        <clobbers target="cloudSky.deviceInfo" />
     </js-module>
     <platform name="android">
         <config-file target="config.xml" parent="/*">
