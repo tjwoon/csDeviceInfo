@@ -15,7 +15,7 @@
         <clobbers target="cloudSky.deviceInfo" />
     </js-module>
     <platform name="android">
-        <config-file target="config.xml" parent="/*">
+        <config-file target="res/xml/config.xml" parent="/*">
             <feature name="DeviceInfo">
                 <param name="android-package" value="org.cloudsky.cordovaPlugins.DeviceInfo"/>
             </feature>
