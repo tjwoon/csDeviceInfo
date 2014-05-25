@@ -16,7 +16,7 @@
     </js-module>
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="DeviceInfo">
+            <feature name="CsDeviceInfo">
                 <param name="android-package" value="org.cloudsky.cordovaPlugins.DeviceInfo"/>
             </feature>
         </config-file>

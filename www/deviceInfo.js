@@ -9,8 +9,8 @@ DeviceInfo.prototype = {
 
     getVersionName: function (success, error)
     {
-        argscheck.checkArgs('fF', 'DeviceInfo.getVersionName', arguments);
-        exec(success, error, 'DeviceInfo', 'getVersionName', []);
+        argscheck.checkArgs('fF', 'CsDeviceInfo.getVersionName', arguments);
+        exec(success, error, 'CsDeviceInfo', 'getVersionName', []);
     },
 
 };
