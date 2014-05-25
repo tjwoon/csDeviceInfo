@@ -11,9 +11,11 @@
     <description>A Cordova plugin to retrieve app info such as version name, app name, etc.</description>
     <license>Apache 2.0</license>
     <keywords>cordova,device,device info</keywords>
+
     <js-module src="www/deviceInfo.js" name="deviceInfo">
         <clobbers target="cloudSky.deviceInfo" />
     </js-module>
+
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="CsDeviceInfo">
@@ -22,4 +24,15 @@
         </config-file>
         <source-file src="android/DeviceInfo.java" target-dir="src/org/cloudsky/cordovaPlugins" />
     </platform>
+
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="CsDeviceInfo">
+                <param name="ios-package" value="CsDeviceInfo"/>
+            </feature>
+        </config-file>
+        <header-file src="ios/CsDeviceInfo.h" />
+        <source-file src="ios/CsDeviceInfo.m" />
+    </platform>
+
 </plugin>
