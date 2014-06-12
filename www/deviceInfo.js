@@ -13,6 +13,12 @@ DeviceInfo.prototype = {
         exec(success, error, 'CsDeviceInfo', 'getVersionName', []);
     },
 
+    isHackedDevice: function (success, error)
+    {
+        argscheck.checkArgs('fF', 'CsDeviceInfo.isHackedDevice', arguments);
+        exec(success, error, 'CsDeviceInfo', 'isHackedDevice', []);
+    },
+
 };
 
 module.exports = new DeviceInfo();
