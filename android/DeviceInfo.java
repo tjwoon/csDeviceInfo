@@ -14,11 +14,13 @@ import android.content.pm.PackageManager.NameNotFoundException;
 
 public class DeviceInfo extends CordovaPlugin {
 
+    static private const String ACTION_GETVERSIONNAME = "getVersionName";
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext)
     throws JSONException
     {
-        if(action.equals("getVersionName")) {
+        if(action.equals(ACTION_GETVERSIONNAME)) {
             Activity act = cordova.getActivity();
             PackageManager packageManager = act.getPackageManager();
             try {
