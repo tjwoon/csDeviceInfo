@@ -10,11 +10,11 @@
         return;                                              \
     }
 
-static NSString *jb_existenceTests[] = {
-    @"/bin/bash",
-    @"/Applications/Cydia.app",
-    @"/private/var/lib/apt",
-    @"/Library/MobileSubstrate/MobileSubstrate.dylib",
+static char *jb_existenceTests[] = {
+    "/bin/bash",
+    "/Applications/Cydia.app",
+    "/private/var/lib/apt",
+    "/Library/MobileSubstrate/MobileSubstrate.dylib",
     0
 };
 
@@ -54,9 +54,11 @@ static NSString *jb_tmpFilePath = @"/ge_starbuddy_jb_test";
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
     // Check files/directories existence
-    NSString **existenceTestPath;
-    for(existenceTestPath=&jb_existenceTests; *existenceTestPath; existenceTestPath++) {
-        if([fileManager fileExistsAtPath:*existenceTestPath]) {
+    char **existenceTestPath;
+    NSString *testPath;
+    for(existenceTestPath=jb_existenceTests; *existenceTestPath; existenceTestPath++) {
+        testPath = [NSString stringWithCString:existenceTestPath encoding:NSUTF8StringEncoding];
+        if([fileManager fileExistsAtPath:testPath]) {
             result = resultYes;
             break;
         }
