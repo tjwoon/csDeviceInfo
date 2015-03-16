@@ -97,9 +97,9 @@ public class DeviceInfo extends CordovaPlugin {
           || hasRootPermissions()
           || hasRootCommands()
         ) {
-            callbackContext.success(true);
+            callbackContext.success(1);
         } else {
-            callbackContext.success(false);
+            callbackContext.success(0);
         }
     }
 
