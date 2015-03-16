@@ -25,6 +25,14 @@ static NSString *jb_tmpFilePath = @"/ge_starbuddy_jb_test";
 
 @implementation CsDeviceInfo
 
+- (void)getAppId: (CDVInvokedUrlCommand*)command
+{
+    NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
+    CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                               messageAsString:bundleId];
+    [self success:result callbackId:command.callbackId];
+}
+
 - (void)getVersionName: (CDVInvokedUrlCommand*)command
 {
     NSString *versionName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];

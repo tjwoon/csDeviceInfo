@@ -7,6 +7,12 @@ function DeviceInfo () {};
 
 DeviceInfo.prototype = {
 
+    getAppId: function (success, error)
+    {
+        argscheck.checkArgs('fF', 'CsDeviceInfo.getAppId', arguments);
+        exec(success, error, 'CsDeviceInfo', 'getAppId', []);
+    },
+
     getVersionName: function (success, error)
     {
         argscheck.checkArgs('fF', 'CsDeviceInfo.getVersionName', arguments);

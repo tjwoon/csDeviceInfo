@@ -18,6 +18,7 @@ import android.content.pm.PackageManager;
 
 public class DeviceInfo extends CordovaPlugin {
 
+    static private final String ACTION_GETAPPID = "getAppId";
     static private final String ACTION_GETVERSIONNAME = "getVersionName";
     static private final String ACTION_ISHACKEDDEVICE = "isHackedDevice";
 
@@ -63,7 +64,12 @@ public class DeviceInfo extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext)
     throws JSONException
     {
-        if(action.equals(ACTION_GETVERSIONNAME)) {
+        if(action.equals(ACTION_GETAPPID)) {
+            callbackContext.success(
+                cordova.getActivity().getApplicationContext().getPackageName()
+            );
+            return true;
+        } else if(action.equals(ACTION_GETVERSIONNAME)) {
             Activity act = cordova.getActivity();
             PackageManager packageManager = act.getPackageManager();
             try {
@@ -96,7 +102,7 @@ public class DeviceInfo extends CordovaPlugin {
             callbackContext.success(false);
         }
     }
-    
+
     private boolean hasRootPackages ()
     {
         Activity act = cordova.getActivity();
