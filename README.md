@@ -10,7 +10,7 @@ Installation
 
 ### Using the Cordova CLI
 
-`cordova plugins install org.cloudsky.cordovaplugins.deviceinfo`
+`cordova plugins add org.cloudsky.cordovaplugins.deviceinfo`
 
 
 Usage
