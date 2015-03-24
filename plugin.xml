@@ -38,4 +38,10 @@
         <source-file src="ios/CsDeviceInfo.m" />
     </platform>
 
+    <platform name="windows">
+        <js-module src="windows/deviceInfoProxy.js" name="CsDeviceInfo">
+            <merges target="" />
+        </js-module>
+    </platform>
+
 </plugin>

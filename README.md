@@ -22,7 +22,8 @@ Usage
 cloudSky.deviceInfo.getAppId(
     function (appId) {
         // Success callback.
-        // `appId` is the package name on Android, bundle identifier on iOS.
+        // `appId` is the package name on Android, bundle identifier on iOS,
+        // `ProductId` on Windows.
     },
     function (err) {
         // Failure callback.
@@ -42,6 +43,9 @@ cloudSky.deviceInfo.getVersionName(
         // AndroidManifest's <manifest> element, `android:versionName` attribute).
         // On iOS, this is the `CFBundleShortVersionString` value from the main
         // NSBundle.
+        // On Windows, this is the version number built from components
+        // <major>.<minor>.<build>.<revision> of the WinJS PackageId class
+        // (https://msdn.microsoft.com/en-us/library/windows/apps/windows.applicationmodel.packageid.aspx#properties)
     },
     function (err) {
         // Failure callback.
@@ -61,6 +65,8 @@ cloudSky.deviceInfo.isHackedDevice(
         // Success callback.
         // `isHacked` is _truthy_ if the device is rooted/jailbroken, _falsy_
         // otherwise (meaning it can be true, false, 1, 0, ...).
+        // NOTE: `isHacked` is always false on Windows - no checking is
+        // performed on this platform...
     },
     function (err) {
         // Failure callback.
