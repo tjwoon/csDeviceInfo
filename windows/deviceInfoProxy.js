@@ -5,7 +5,7 @@ cordova.commandProxy.add("CsDeviceInfo", {
     {
         setTimeout(function () {
             try {
-                successCb(Windows.ApplicationModel.Package.current.id.ProductId)
+                successCb(Windows.ApplicationModel.Package.current.id.name)
             } catch (e) {
                 failCb(e)
             }
