@@ -1,0 +1,38 @@
+{
+  "name": "csDeviceInfo",
+  "version": "0.2.1",
+  "description": "A Cordova plugin to retrieve app info such as version name, app name, etc.",
+  "cordova": {
+    "id": "org.cloudsky.cordovaplugins.deviceinfo",
+    "platforms": [
+      "android",
+      "ios",
+      "windows"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tjwoon/csDeviceInfo.git"
+  },
+  "keywords": [
+    "cordova",
+    "device",
+    "device info",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova-windows"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": "\"TJ Woon\" <tj@cloudsky.org>",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/tjwoon/csDeviceInfo/issues"
+  },
+  "homepage": "https://github.com/tjwoon/csDeviceInfo#readme"
+}
