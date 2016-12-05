@@ -6,7 +6,7 @@
 
 #define JAILBREAK_RETURN_YES_IF_RESULT()                     \
     if(result) {                                             \
-        [self success:result callbackId:command.callbackId]; \
+        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId]; \
         return;                                              \
     }
 
