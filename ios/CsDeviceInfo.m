@@ -30,14 +30,14 @@ static NSString *jb_tmpFilePath = @"/ge_starbuddy_jb_test";
     NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                                messageAsString:bundleId];
-    [self success:result callbackId:command.callbackId];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
 - (void)getVersionName: (CDVInvokedUrlCommand*)command
 {
     NSString *versionName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:versionName];
-    [self success: result callbackId: command.callbackId];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
 - (void)isHackedDevice: (CDVInvokedUrlCommand*)command
@@ -94,7 +94,7 @@ static NSString *jb_tmpFilePath = @"/ge_starbuddy_jb_test";
     JAILBREAK_RETURN_YES_IF_RESULT()
 
     // Not jailbroken as far as we can tell...
-    [self success:resultNo callbackId:command.callbackId];
+    [self.commandDelegate sendPluginResult:resultNo callbackId:command.callbackId];
 }
 
 @end
