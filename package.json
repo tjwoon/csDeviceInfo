@@ -1,9 +1,9 @@
 {
-  "name": "cordova-plugin-deviceinfo",
+  "name": "cordova-plugin-csdeviceinfo",
   "version": "1.0.0",
   "description": "A Cordova plugin to retrieve app info such as version name, app name, etc.",
   "cordova": {
-    "id": "cordova-plugin-deviceinfo",
+    "id": "cordova-plugin-csdeviceinfo",
     "platforms": [
       "android",
       "ios",
