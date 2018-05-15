@@ -26,6 +26,7 @@
             </feature>
         </config-file>
         <source-file src="android/DeviceInfo.java" target-dir="src/org/cloudsky/cordovaPlugins" />
+        <framework src="com.scottyab:rootbeer-lib:0.0.6" />
     </platform>
 
     <platform name="ios">

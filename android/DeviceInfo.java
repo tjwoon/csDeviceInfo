@@ -15,6 +15,7 @@ import java.lang.Runtime;
 import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import com.scottyab.rootbeer.RootBeer;
 
 public class DeviceInfo extends CordovaPlugin {
 
@@ -92,7 +93,12 @@ public class DeviceInfo extends CordovaPlugin {
 
     private void checkIfRooted (CallbackContext callbackContext)
     {
-        if(  hasRootPackages()
+        Boolean rootBeerRooted = false;
+        RootBeer rootBeer = new RootBeer(cordova.getActivity().getApplicationContext());
+        if (rootBeer.isRootedWithoutBusyBoxCheck()) rootBeerRooted = true;
+
+        if(  rootBeerRooted
+          || hasRootPackages()
           || hasRootFiles()
           || hasRootPermissions()
           || hasRootCommands()

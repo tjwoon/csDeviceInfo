@@ -74,3 +74,41 @@ cloudSky.deviceInfo.isHackedDevice(
     }
 )
 ```
+
+
+Troubleshooting
+---------------
+
+### Android support library build error
+
+If you get the following error when building on Android:
+
+```
+* What went wrong:
+Execution failed for task ':processArmv7ReleaseManifest'.
+> Manifest merger failed : Attribute meta-data#android.support.VERSION@value value=(26.0.0-alpha1) from [com.android.support:support-v4:26.0.0-alpha1] AndroidManifest.xml:27:9-38
+  	is also present at [com.android.support:appcompat-v7:25.3.0] AndroidManifest.xml:27:9-31 value=(25.3.0).
+  	Suggestion: add 'tools:replace="android:value"' to <meta-data> element at AndroidManifest.xml:25:5-27:41 to override.
+```
+
+Try adding this to your `cordova/platforms/android/build.gradle` file, replacing
+the `useVersion` with the ones you need:
+
+```
+dependencies {
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (requested.name == 'appcompat-v7') {
+                    details.useVersion '23.+'
+                } else if (requested.name == 'support-v4') {
+                    details.useVersion '26.+'
+                } else if (requested.name == 'support-compat') {
+                    details.useVersion '25.0.1'
+                }
+            }
+        }
+    }
+}
+```
