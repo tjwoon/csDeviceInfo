@@ -37,6 +37,8 @@
         </config-file>
         <header-file src="ios/CsDeviceInfo.h" />
         <source-file src="ios/CsDeviceInfo.m" />
+        <header-file src="ios/DTTJailbreakDetection.h" />
+        <source-file src="ios/DTTJailbreakDetection.m" />
     </platform>
 
     <platform name="windows">

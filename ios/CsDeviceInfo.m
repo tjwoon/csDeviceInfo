@@ -1,6 +1,7 @@
 #import "CsDeviceInfo.h"
 
 #include <sys/types.h> // for fork()
+#import "DTTJailbreakDetection.h"
 
 // Config for Jailbroken device detection ------------------------------
 
@@ -52,6 +53,13 @@ static NSString *jb_tmpFilePath = @"/ge_starbuddy_jb_test";
                      messageAsBool:NO];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    // Check via Jailbreak detection library
+    if([DTTJailbreakDetection isJailbroken]) {
+      result = resultYes;
+    }
+
+    JAILBREAK_RETURN_YES_IF_RESULT()
 
     // Check files/directories existence
     char **existenceTestPath;
