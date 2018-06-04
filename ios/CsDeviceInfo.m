@@ -5,12 +5,6 @@
 
 // Config for Jailbroken device detection ------------------------------
 
-#define JAILBREAK_RETURN_YES_IF_RESULT()                     \
-    if(result) {                                             \
-        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId]; \
-        return;                                              \
-    }
-
 static char *jb_existenceTests[] = {
     "/bin/bash",
     "/Applications/Cydia.app",
@@ -19,12 +13,59 @@ static char *jb_existenceTests[] = {
     0
 };
 
-static NSString *jb_tmpFilePath = @"/ge_starbuddy_jb_test";
+static NSString *jb_tmpFilePath = @"/csdeviceinfo_jb_test";
 
 
 // Implementation ------------------------------------------------------
 
 @implementation CsDeviceInfo
+
+- (NSDictionary*)jailbreakDetectionDetails
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    NSMutableDictionary *results = [[NSMutableDictionary alloc] init];
+
+    // Check via Jailbreak detection library
+    [results setObject:[NSNumber numberWithBool:[DTTJailbreakDetection isJailbroken]]
+             forKey:@"DTTJailbreakDetection"];
+
+    // Check files/directories existence
+    char **existenceTestPath;
+    NSString *testPath;
+    for(existenceTestPath=jb_existenceTests; *existenceTestPath; existenceTestPath++) {
+        testPath = [NSString stringWithCString:*existenceTestPath encoding:NSUTF8StringEncoding];
+        NSString *testName = @"fileExistence: ";
+        testName = [testName stringByAppendingString:testPath];
+        [results setObject:[NSNumber numberWithBool:[fileManager fileExistsAtPath:testPath]]
+                 forKey:testName];
+    }
+
+    // Check if app is able to open Cydia
+    [results
+     setObject:[NSNumber numberWithBool:[[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"cydia://"]]]
+     forKey:@"Cydia"];
+
+    // Check if app is able to fork()
+    pid_t forkResult = fork();
+    if(forkResult == 0) exit(0);
+    else if(forkResult != -1) {
+        [results setObject:[NSNumber numberWithBool:YES] forKey:@"fork"];
+    }
+
+    // Check if app is able to write outside of the iOS app sandbox
+    BOOL fileWritten = [@"temporary test"
+                        writeToFile:jb_tmpFilePath
+                        atomically:YES
+                        encoding:kCFStringEncodingUTF8
+                        error:NULL];
+    [results setObject:[NSNumber numberWithBool:fileWritten] forKey:@"sandbox"];
+    if(fileWritten) {
+        [fileManager removeItemAtPath:jb_tmpFilePath error:NULL];
+    }
+
+    return results;
+}
 
 - (void)getAppId: (CDVInvokedUrlCommand*)command
 {
@@ -43,66 +84,32 @@ static NSString *jb_tmpFilePath = @"/ge_starbuddy_jb_test";
 
 - (void)isHackedDevice: (CDVInvokedUrlCommand*)command
 {
-    CDVPluginResult
-        *result = nil,
-        *resultYes = [CDVPluginResult
-                      resultWithStatus:CDVCommandStatus_OK
-                      messageAsBool:YES],
-        *resultNo = [CDVPluginResult
-                     resultWithStatus:CDVCommandStatus_OK
-                     messageAsBool:NO];
-
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-
-    // Check via Jailbreak detection library
-    if([DTTJailbreakDetection isJailbroken]) {
-      result = resultYes;
+    NSDictionary *detection = [self jailbreakDetectionDetails];
+    for (NSString *key in detection) {
+      if(((NSNumber*)detection[key]).boolValue) {
+        [self.commandDelegate
+            sendPluginResult:[CDVPluginResult
+                              resultWithStatus:CDVCommandStatus_OK
+                              messageAsBool:YES]
+            callbackId:command.callbackId];
+        return;
+      }
     }
 
-    JAILBREAK_RETURN_YES_IF_RESULT()
+    [self.commandDelegate
+        sendPluginResult:[CDVPluginResult
+                          resultWithStatus:CDVCommandStatus_OK
+                          messageAsBool:NO]
+        callbackId:command.callbackId];
+}
 
-    // Check files/directories existence
-    char **existenceTestPath;
-    NSString *testPath;
-    for(existenceTestPath=jb_existenceTests; *existenceTestPath; existenceTestPath++) {
-        testPath = [NSString stringWithCString:existenceTestPath encoding:NSUTF8StringEncoding];
-        if([fileManager fileExistsAtPath:testPath]) {
-            result = resultYes;
-            break;
-        }
-    }
-
-    JAILBREAK_RETURN_YES_IF_RESULT()
-
-    // Check if app is able to open Cydia
-    if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"cydia://"]]) {
-        result = resultYes;
-    }
-
-    JAILBREAK_RETURN_YES_IF_RESULT()
-
-    // Check if app is able to fork()
-    pid_t forkResult = fork();
-    if(forkResult == 0) exit(0);
-    else if(forkResult != -1) result = resultYes;
-
-    JAILBREAK_RETURN_YES_IF_RESULT()
-
-    // Check if app is able to write outside of the iOS app sandbox
-    BOOL fileWritten = [@"temporary test"
-                        writeToFile:jb_tmpFilePath
-                        atomically:YES
-                        encoding:kCFStringEncodingUTF8
-                        error:NULL];
-    if(fileWritten) {
-        result = resultYes;
-        [fileManager removeItemAtPath:jb_tmpFilePath error:NULL];
-    }
-
-    JAILBREAK_RETURN_YES_IF_RESULT()
-
-    // Not jailbroken as far as we can tell...
-    [self.commandDelegate sendPluginResult:resultNo callbackId:command.callbackId];
+- (void)getHackDetectionDetails: (CDVInvokedUrlCommand*)command
+{
+    [self.commandDelegate
+        sendPluginResult:[CDVPluginResult
+                          resultWithStatus:CDVCommandStatus_OK
+                          messageAsDictionary:[self jailbreakDetectionDetails]]
+        callbackId:command.callbackId];
 }
 
 @end

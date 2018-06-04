@@ -76,6 +76,29 @@ cloudSky.deviceInfo.isHackedDevice(
 ```
 
 
+### Get Devcie Jailbreak/Root detection details
+
+Get details about jailbreak / root detection, i.e. which tests considered the
+device to be jailbroken / rooted, which tests did not detect anything.
+
+```
+cloudSky.deviceInfo.getHackDetectionDetails(
+    function (details) {
+        // NOTE: Android and iOS  have different sets of tests.
+        for(var testName in details) {
+            if(details[testName]) {
+                console.log(testName + " was positive.")
+            }
+        }
+    },
+    function (err) {
+        // Failure callback.
+        // `err` is an error message.
+    }
+)
+```
+
+
 Troubleshooting
 ---------------
 

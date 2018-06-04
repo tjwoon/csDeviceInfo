@@ -25,6 +25,12 @@ DeviceInfo.prototype = {
         exec(success, error, 'CsDeviceInfo', 'isHackedDevice', []);
     },
 
+    getHackDetectionDetails: function (success, error)
+    {
+        argscheck.checkArgs('fF', 'CsDeviceInfo.getHackDetectionDetails', arguments);
+        exec(success, error, 'CsDeviceInfo', 'getHackDetectionDetails', []);
+    },
+
 };
 
 module.exports = new DeviceInfo();
